@@ -1,0 +1,97 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane" class="box" *ngIf="vm">
+  <div class="header" cdkDragHandle>
+    <h3>
+      {{vm.juvenile_ContactNoteDto.contact_number == 0 ? "Add" : "Edit"}} Contact Note -
+      {{vm.juvenile_ContactNoteDto.offender_Full_name}} (#{{vm.juvenile_ContactNoteDto.sin}})
+    </h3>
+    <button type="button" mat-dialog-close mat-button class="btn-close" data-bs-dismiss="modal"
+      aria-label="Close">X</button>
+  </div>
+  <div class="body">
+    <div class="container">
+      <form #userForm="ngForm">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <b>
+              Date Time
+            </b>
+            <div>
+              <div class="input-wrapper">
+                <input type="text" [(ngModel)]="vm.juvenile_ContactNoteDto.contact_date" name="contact_date"
+                  class="form-control" [owlDateTimeTrigger]="contactDate" [owlDateTime]="contactDate"
+                  [ngClass]="{ 'is-invalid': newListEditor.contact_date }">
+                <owl-date-time [hour12Timer]="'false'" #contactDate></owl-date-time>
+                <div *ngIf="newListEditor.contact_date" class="invalid-feedback">
+                  {{ newListEditor.contact_date }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <span style="font-weight:600;">
+              This Contact Included
+            </span>
+            <div>
+              Family / Guardian
+              <input type="checkbox" [(ngModel)]="vm.juvenile_ContactNoteDto.isFamilyOrGuardianInvolved"
+                name="isFamilyOrGuardianInvolved" />
+            </div>
+            <div>
+              Juvenile
+              <input type="checkbox" [(ngModel)]="vm.juvenile_ContactNoteDto.isJuvenileInvolved"
+                name="isJuvenileInvolved" />
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <b>
+              Contact Type
+            </b>
+            <select class="form-control" name="contact_type" [(ngModel)]="vm.juvenile_ContactNoteDto.contact_type_id"
+              [ngClass]="{ 'is-invalid': newListEditor.contact_type }">
+              <option value="" disabled>Choose a Type</option>
+              <option *ngFor="let c of contactTypes" [ngValue]="c.id">{{ c.type }}</option>
+            </select>
+            <div *ngIf="newListEditor.contact_type" class="invalid-feedback">
+              {{ newListEditor.contact_type }}
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <b>
+              Contacted By
+            </b>
+            <select class="form-control" name="contacted_by" [(ngModel)]="vm.juvenile_ContactNoteDto.contacted_by"
+              [ngClass]="{ 'is-invalid': newListEditor.contacted_by }">
+              <option value="" disabled>Select --</option>
+              <option *ngFor="let c of vm.staff" [ngValue]="c.staff_key">{{ c.last_name }}, {{ c.first_name }}</option>
+            </select>
+            <div *ngIf="newListEditor.contacted_by" class="invalid-feedback">
+              {{ newListEditor.contacted_by }}
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <b>
+              Comments
+            </b>
+            <textarea style="height:50px" type="text" class="form-control" name="comment"
+              [(ngModel)]="vm.juvenile_ContactNoteDto.comment"
+              [ngClass]="{ 'is-invalid': newListEditor.comment }"></textarea>
+            <div *ngIf="newListEditor.comment" class="invalid-feedback">
+              {{ newListEditor.comment }}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      <div class="row float-right">
+        <button class="btn btn-close mr-3" mat-dialog-close mat-button>Cancel</button>
+        <button *ngIf="vm.juvenile_ContactNoteDto.contact_number != 0 && data.cansaveedit " class="btn btn-primary"
+          style="float:right" (click)="UpdateItem()">Save</button>
+        <button *ngIf="vm.juvenile_ContactNoteDto.contact_number == 0  && data.cansaveedit" class="btn btn-primary"
+          style="float:right" (click)="createItem()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

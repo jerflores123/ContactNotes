@@ -1,0 +1,59 @@
+<div *ngIf="!vm && Privilege && Privilege.read_priv">
+</div>
+<div class="text-center mt-5 pt-5" *ngIf="Privilege && !Privilege.read_priv">
+  <h4>Sorry! You don't have permission to access this page.</h4>
+  <p>Please contact IJOS SUPPORT at IJOS.SUPPORT@idjc.idaho.gov</p>
+</div>
+<div *ngIf="Privilege && Privilege.read_priv">
+  <app-offender-header title="Contact Notes" [id]="_sin"> </app-offender-header>
+  <div class="row" *ngIf="vm">
+    <div class="col-md-12 text-right">
+      <div class="tooltip2">
+        <div (click)="Privilege.create_priv && OpenItem(0,true, true)" class="col-2" *ngIf="isAgencySame"
+          [class.disabled]="!Privilege.create_priv" class="text-right btn-action">
+          Add Contact Notes
+        </div>
+        <span *ngIf="!Privilege.create_priv" class="tooltiptext">You don't have permission</span>
+      </div>
+    </div>
+  </div>
+  <div class="mt-2">    
+      <table class="table" aria-labelledby="tableLabel" *ngIf="vm">
+        <thead class="tableheadercontent">
+          <tr>
+            <th>Contact Number</th>
+            <th>Contact Date</th>
+            <th>Contact Type</th>
+            <th>Contact Name</th>
+            <th>Comments</th>
+            <th>Created By</th>
+            <th>Date Created</th>
+            <th>Agency</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of vm">
+            <td>{{ c.contactNumber }}</td>
+            <td>{{(c.contactDate | date: 'MM/dd/yyyy') === '01/01/0001' ? '' : (c.contactDate | date: 'MM/dd/yyyy')}}
+            </td>
+            <td>{{ c.contactType }}</td>
+            <td>{{ c.contactedByStaff }}</td>
+            <td>{{ c.comment.substring(0, 100) }}...</td>
+            <td>{{ c.createdByName }}</td>
+            <td>{{ c.createdDate | date: "MM/dd/yyyy" }}</td>            
+            <td>{{ c.agencyName }}</td>
+            <td>                               
+              <mat-icon *ngIf="staffKey==c.createdByStaffKey" class="edit-icon-2"
+                (click)="OpenItem(c.contactNumber,true, false)">edit</mat-icon>
+              <mat-icon *ngIf="staffKey!=c.createdByStaffKey" class="btn-action" 
+                (click)="OpenItem(c.contactNumber,false, false)">remove_red_eye</mat-icon>
+              &nbsp;&nbsp;&nbsp;
+              <mat-icon *ngIf="staffKey==c.createdByStaffKey || Privilege.delete_priv" class="edit-icon-2"
+                (click)="DeleteItem(c.contactNumber)">delete</mat-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>    
+  </div>
+</div>

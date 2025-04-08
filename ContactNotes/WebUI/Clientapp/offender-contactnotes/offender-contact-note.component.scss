@@ -1,0 +1,65 @@
+
+@import '../../assets/scss/variables';
+
+::ng-deep .warning {
+  background: 'red';
+}
+
+td .edit-icon-2 {
+  color: #3498db;
+  cursor: pointer;
+}
+
+mat-icon.disabled {
+  cursor: not-allowed !important;
+}
+
+a {
+  font-size: 17px;
+  text-decoration: none;
+  color: #169BD5;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+a.disabled {
+  color: gray;
+  cursor: not-allowed;
+  /*text-decoration: underline;*/
+}
+
+.close {
+  cursor: pointer;
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+}
+.tooltip2 {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px black;
+}
+
+.tooltip2 .tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: brown;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: -5px 0;
+  margin-left: -300%;
+  margin-top: 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip2:hover .tooltiptext {
+  visibility: visible;
+}
